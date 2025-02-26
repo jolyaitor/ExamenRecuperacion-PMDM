@@ -16,6 +16,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.httpclienttest.ui.components.BottomNavigationBar
+import com.example.httpclienttest.ui.components.Topbar
 import com.example.httpclienttest.ui.navigation.Destinations
 import com.example.httpclienttest.ui.navigation.NavGraph
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +43,25 @@ fun MyApp() {
             currentRoute.value = destination.route ?: Destinations.LISTA_POSTS
         }
     }
+    Scaffold(
+        topBar = { Topbar(currentRoute) },
+        content = { padding ->
+            Box(modifier = Modifier.padding(padding)) {
+                NavGraph(navController)
+            }
+
+        },
+        bottomBar = {
+            BottomNavigationBar(
+                currentRoute = currentRoute.value,
+                onHomeClick = {
+                    navController.navigate(Destinations.LISTA_POSTS)
+                },
+
+                )
+        },
+        modifier = Modifier.fillMaxSize()
+    )
 }
 
 
